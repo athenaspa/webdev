@@ -1,4 +1,4 @@
-FROM webdevops/php-apache:7.1
+FROM webdevops/php-apache-dev:7.1
 
 # User and group permission
 ENV APPLICATION_USER=www-data \
