@@ -35,7 +35,7 @@ RUN docker-image-cleanup
 
 # Set recommended PHP.ini settings
 RUN {  \
-  echo 'memory_limit = 1024M'; \
+  echo 'memory_limit = 2048M'; \
   echo 'max_input_vars = 5000'; \
   echo 'upload_max_filesize = 64M'; \
   echo 'post_max_size = 64M'; \
