@@ -32,22 +32,21 @@ RUN git clone https://github.com/php/pecl-php-uploadprogress /tmp/php-uploadprog
 
 # Let's keep the house clean
 RUN docker-image-cleanup
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set recommended PHP.ini settings
 RUN {  \
+  echo ';;;;;;;;;; General ;;;;;;;;;;'; \
   echo 'memory_limit = 2048M'; \
   echo 'max_input_vars = 5000'; \
   echo 'upload_max_filesize = 64M'; \
   echo 'post_max_size = 64M'; \
-  echo 'max_execution_time = 600'; \
-  echo 'session.cache_limiter = nocache'; \
-  echo 'session.auto_start = 0'; \
-  echo 'expose_php = Off'; \
-  echo 'magic_quotes_gpc = Off'; \
-  echo 'register_globals = Off'; \
-  echo 'display_errors = Off'; \
+  echo 'max_execution_time = 6000'; \
   echo 'date.timezone = Europe/Rome'; \
   echo 'extension = uploadprogress.so'; \
+  echo ' '; \
+  echo ';;;;;;;;;; Sendmail ;;;;;;;;;;'; \
+  echo 'sendmail_path = /usr/sbin/sendmail -S mail:1025'; \  
   } >> /opt/docker/etc/php/php.ini
 
 # Apache conf
