@@ -60,6 +60,9 @@ WORKDIR "/var/www/html"
 #       Specific configurations
 ##########################################
 
+# Multi-site in subdirectories
+RUN ln -s . shop && ln -s . corporate
+
 # Set custom PHP.ini settings
 RUN {  \
       echo ';;;;;;;;;; General ;;;;;;;;;;'; \
