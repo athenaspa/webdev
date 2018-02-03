@@ -10,7 +10,8 @@ RUN usermod --non-unique --uid 1000 www-data
 RUN groupmod --non-unique --gid 1000 www-data
 
 # Commont tool
-RUN apt-get update && apt-get install -y nano \
+RUN apt-get update && apt-get install -y \
+    nano \
     spell \
     mysql-client \
     libfreetype6-dev \
@@ -18,9 +19,7 @@ RUN apt-get update && apt-get install -y nano \
     libmcrypt-dev \
     libpng12-dev \
     gettext \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # Install pecl-php-uploadprogress
 RUN git clone https://github.com/php/pecl-php-uploadprogress /tmp/php-uploadprogress && \
@@ -35,19 +34,27 @@ RUN git clone https://github.com/php/pecl-php-uploadprogress /tmp/php-uploadprog
 RUN docker-image-cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Add bash aliases
+RUN { \
+      echo '# Add bash aliases.'; \
+      echo 'if [ -f /var/www/html/.aliases ]; then'; \
+      echo '    source /var/www/html/.aliases'; \
+      echo 'fi'; \
+    } >> /root/.bashrc
+
 # Set recommended PHP.ini settings
 RUN {  \
-  echo ';;;;;;;;;; General ;;;;;;;;;;'; \
-  echo 'memory_limit = 2048M'; \
-  echo 'max_input_vars = 5000'; \
-  echo 'upload_max_filesize = 64M'; \
-  echo 'post_max_size = 64M'; \
-  echo 'max_execution_time = 6000'; \
-  echo 'date.timezone = Europe/Rome'; \
-  echo 'extension = uploadprogress.so'; \
-  echo ' '; \
-  echo ';;;;;;;;;; Sendmail ;;;;;;;;;;'; \
-  echo 'sendmail_path = /usr/sbin/sendmail -S mail:1025'; \
+      echo ';;;;;;;;;; General ;;;;;;;;;;'; \
+      echo 'memory_limit = 2048M'; \
+      echo 'max_input_vars = 5000'; \
+      echo 'upload_max_filesize = 64M'; \
+      echo 'post_max_size = 64M'; \
+      echo 'max_execution_time = 6000'; \
+      echo 'date.timezone = Europe/Rome'; \
+      echo 'extension = uploadprogress.so'; \
+      echo ' '; \
+      echo ';;;;;;;;;; Sendmail ;;;;;;;;;;'; \
+      echo 'sendmail_path = /usr/sbin/sendmail -S mail:1025'; \
   } >> /opt/docker/etc/php/php.ini
 
 # Apache conf
@@ -56,7 +63,7 @@ RUN a2dismod autoindex -f
 RUN rm /var/www/html/index.html
 
 # We hold public files in mounted devices
-VOLUME ["/var/www/html/web/sites/shared/files"]
+VOLUME ["/var/www/html/web/sites/shared"]
 
 # Exposing ports
 EXPOSE 80 443 9000
