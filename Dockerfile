@@ -42,12 +42,16 @@ RUN docker-image-cleanup \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Add bash aliases
+# Add bash aliases and terminal conf
 RUN { \
+      echo ' '; \
       echo '# Add bash aliases.'; \
       echo 'if [ -f /var/www/html/.aliases ]; then'; \
       echo '    source /var/www/html/.aliases'; \
       echo 'fi'; \
+      echo ' '; \
+      echo '# Add Termina Config.'; \
+      echo 'stty rows 45; stty columns 160;'; \      
     } >> /root/.bashrc
 
 # Exposing ports
