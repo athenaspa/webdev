@@ -50,7 +50,7 @@ RUN { \
       echo '    source /var/www/html/.aliases'; \
       echo 'fi'; \
       echo ' '; \
-      echo '# Add Termina Config.'; \
+      echo '# Add terminal config.'; \
       echo 'stty rows 45; stty columns 160;'; \      
     } >> /root/.bashrc
 
