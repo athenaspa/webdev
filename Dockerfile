@@ -15,9 +15,9 @@ RUN usermod --non-unique --uid 1000 www-data \
 # Commont tools
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
       gettext \
-      libfreetype6-dev \
+      libpng16-16 \
       libjpeg62-turbo-dev \
-      libpng12-dev \
+      libfreetype6-dev \
       mysql-client \
       nano
 
@@ -51,7 +51,7 @@ RUN { \
       echo 'fi'; \
       echo ' '; \
       echo '# Add terminal config.'; \
-      echo 'stty rows 45; stty columns 160;'; \      
+      echo 'stty rows 45; stty columns 160;'; \
     } >> /root/.bashrc
 
 # Exposing ports
