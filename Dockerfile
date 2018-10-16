@@ -6,7 +6,8 @@ ENV APPLICATION_USER=www-data \
     APPLICATION_PATH=/var/www/html \
     APPLICATION_UID=1000 \
     APPLICATION_GID=1000 \
-    WEB_DOCUMENT_ROOT=/var/www/html/web
+    WEB_DOCUMENT_ROOT=/var/www/html/web \
+    ROBO_DRUPAL8_ENV=local
 
 # User and group permission
 RUN usermod --non-unique --uid 1000 www-data \
