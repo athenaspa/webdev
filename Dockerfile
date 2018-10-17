@@ -1,4 +1,4 @@
-FROM webdevops/php-nginx-dev:7.1
+FROM webdevops/php-nginx-dev:7.2
 
 # Environment variables
 ENV APPLICATION_USER=www-data \
