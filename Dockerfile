@@ -12,7 +12,7 @@ ENV APPLICATION_USER=www-data \
 # User and group permission
 RUN usermod --non-unique --uid 1000 www-data \
     && groupmod --non-unique --gid 1000 www-data \
-    && usermod -d /home/www-data -m www-data
+    && chown -R www-data:www-data /var/www
 
 # Commont tools
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
@@ -54,22 +54,22 @@ RUN { \
       echo ' '; \
       echo '# Add terminal config.'; \
       echo 'stty rows 80; stty columns 160;'; \
-    } | tee -a /home/www-data/.bashrc /root/.bashrc
+    } | tee -a /var/www/.bashrc /root/.bashrc
 
 # Check ssh_keys ownership and permission
 RUN { \
       echo ' '; \
-      echo 'if [[ -f /home/www-data/.ssh/id_rsa ]]; then'; \
-      echo '    chown www-data:www-data /home/www-data/.ssh/id_rsa'; \
-      echo '    chmod 600 /home/www-data/.ssh/id_rsa'; \
+      echo 'if [[ -f /var/www/.ssh/id_rsa ]]; then'; \
+      echo '    chown www-data:www-data /var/www/.ssh/id_rsa'; \
+      echo '    chmod 600 /var/www/.ssh/id_rsa'; \
       echo 'fi'; \
-      echo 'if [[ -f /home/www-data/.ssh/id_rsa.pub ]]; then'; \
-      echo '    chown www-data:www-data /home/www-data/.ssh/id_rsa.pub'; \
-      echo '    chmod 600 /home/www-data/.ssh/id_rsa.pub'; \
+      echo 'if [[ -f /var/www/.ssh/id_rsa.pub ]]; then'; \
+      echo '    chown www-data:www-data /var/www/.ssh/id_rsa.pub'; \
+      echo '    chmod 600 /var/www/.ssh/id_rsa.pub'; \
       echo 'fi'; \
-      echo 'if [[ -f /home/www-data/.ssh/authorized_keys ]]; then'; \
-      echo '    chown www-data:www-data /home/www-data/.ssh/authorized_keys'; \
-      echo '    chmod 600 /home/www-data/.ssh/authorized_keys'; \
+      echo 'if [[ -f /var/www/.ssh/authorized_keys ]]; then'; \
+      echo '    chown www-data:www-data /var/www/.ssh/authorized_keys'; \
+      echo '    chmod 600 /var/www/.ssh/authorized_keys'; \
       echo 'fi'; \
 } >> /opt/docker/provision/entrypoint.d/05-ssh_keys.sh
 
