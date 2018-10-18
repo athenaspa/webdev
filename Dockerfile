@@ -81,9 +81,10 @@ RUN {  \
       echo 'sendmail_path = /usr/sbin/sendmail -S mail:1025'; \
   } >> /opt/docker/etc/php/php.ini
 
-# Check ssh_keys ownership and permission
+# Check ownership and permission
 RUN { \
-      echo ' '; \
+      echo '# Check ssh_keys ownership and home dir permission'; \
+      echo ' '; \      
       echo 'chown www-data:www-data /var/www && chmod 755 /var/www'; \
       echo ' '; \
       echo 'if [[ -f /var/www/.ssh/id_rsa ]]; then'; \
