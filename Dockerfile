@@ -56,23 +56,6 @@ RUN { \
       echo 'stty rows 80; stty columns 160;'; \
     } | tee -a /var/www/.bashrc /root/.bashrc
 
-# Check ssh_keys ownership and permission
-RUN { \
-      echo ' '; \
-      echo 'if [[ -f /var/www/.ssh/id_rsa ]]; then'; \
-      echo '    chown www-data:www-data /var/www/.ssh/id_rsa'; \
-      echo '    chmod 600 /var/www/.ssh/id_rsa'; \
-      echo 'fi'; \
-      echo 'if [[ -f /var/www/.ssh/id_rsa.pub ]]; then'; \
-      echo '    chown www-data:www-data /var/www/.ssh/id_rsa.pub'; \
-      echo '    chmod 600 /var/www/.ssh/id_rsa.pub'; \
-      echo 'fi'; \
-      echo 'if [[ -f /var/www/.ssh/authorized_keys ]]; then'; \
-      echo '    chown www-data:www-data /var/www/.ssh/authorized_keys'; \
-      echo '    chmod 600 /var/www/.ssh/authorized_keys'; \
-      echo 'fi'; \
-} >> /opt/docker/provision/entrypoint.d/05-ssh_keys.sh
-
 # Exposing ports
 EXPOSE 80 443 9000
 
@@ -97,3 +80,22 @@ RUN {  \
       echo ';;;;;;;;;; Sendmail ;;;;;;;;;;'; \
       echo 'sendmail_path = /usr/sbin/sendmail -S mail:1025'; \
   } >> /opt/docker/etc/php/php.ini
+
+# Check ssh_keys ownership and permission
+RUN { \
+      echo ' '; \
+      echo 'chown www-data:www-data /var/www && chmod 755 /var/www'; \
+      echo ' '; \
+      echo 'if [[ -f /var/www/.ssh/id_rsa ]]; then'; \
+      echo '    chown www-data:www-data /var/www/.ssh/id_rsa'; \
+      echo '    chmod 600 /var/www/.ssh/id_rsa'; \
+      echo 'fi'; \
+      echo 'if [[ -f /var/www/.ssh/id_rsa.pub ]]; then'; \
+      echo '    chown www-data:www-data /var/www/.ssh/id_rsa.pub'; \
+      echo '    chmod 600 /var/www/.ssh/id_rsa.pub'; \
+      echo 'fi'; \
+      echo 'if [[ -f /var/www/.ssh/authorized_keys ]]; then'; \
+      echo '    chown www-data:www-data /var/www/.ssh/authorized_keys'; \
+      echo '    chmod 600 /var/www/.ssh/authorized_keys'; \
+      echo 'fi'; \
+} >> /opt/docker/provision/entrypoint.d/05-ssh_keys.sh
