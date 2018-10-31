@@ -85,9 +85,8 @@ RUN {  \
 RUN { \
       echo '# Check ssh_keys ownership and home dir permission'; \
       echo ' '; \   
-      echo 'mkdir -p /var/www/.ssh && touch /var/www/.ssh/known_hosts'; \ 
-      echo ' '; \    
-      echo 'chown www-data:www-data /var/www && chmod 755 /var/www'; \
+      echo 'mkdir -p /var/www/.ssh && ssh-keyscan bitbucket.org >> /var/www/.ssh/known_hosts'; \    
+      echo 'chown -R www-data:www-data /var/www && chmod -R 755 /var/www'; \
       echo ' '; \
       echo 'if [[ -f /var/www/.ssh/id_rsa ]]; then'; \
       echo '    chown www-data:www-data /var/www/.ssh/id_rsa'; \
