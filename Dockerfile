@@ -88,16 +88,13 @@ RUN { \
       echo 'mkdir -p /var/www/.ssh && ssh-keyscan bitbucket.org >> /var/www/.ssh/known_hosts'; \    
       echo 'chown -R www-data:www-data /var/www && chmod -R 755 /var/www'; \
       echo ' '; \
-      echo 'if [[ -f /var/www/.ssh/id_rsa ]]; then'; \
-      echo '    chown www-data:www-data /var/www/.ssh/id_rsa'; \
+      echo 'if [ -f "/var/www/.ssh/id_rsa" ]; then'; \
       echo '    chmod 600 /var/www/.ssh/id_rsa'; \
       echo 'fi'; \
-      echo 'if [[ -f /var/www/.ssh/id_rsa.pub ]]; then'; \
-      echo '    chown www-data:www-data /var/www/.ssh/id_rsa.pub'; \
+      echo 'if [ -f "/var/www/.ssh/id_rsa.pub" ]; then'; \
       echo '    chmod 600 /var/www/.ssh/id_rsa.pub'; \
       echo 'fi'; \
-      echo 'if [[ -f /var/www/.ssh/authorized_keys ]]; then'; \
-      echo '    chown www-data:www-data /var/www/.ssh/authorized_keys'; \
+      echo 'if [ -f "/var/www/.ssh/authorized_keys" ]; then'; \
       echo '    chmod 600 /var/www/.ssh/authorized_keys'; \
       echo 'fi'; \
 } >> /opt/docker/provision/entrypoint.d/05-ssh_keys.sh
