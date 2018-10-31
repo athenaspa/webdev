@@ -84,7 +84,9 @@ RUN {  \
 # Check ownership and permission
 RUN { \
       echo '# Check ssh_keys ownership and home dir permission'; \
-      echo ' '; \      
+      echo ' '; \   
+      echo 'mkdir -p /var/www/.ssh && touch /var/www/.ssh/known_hosts'; \ 
+      echo ' '; \    
       echo 'chown www-data:www-data /var/www && chmod 755 /var/www'; \
       echo ' '; \
       echo 'if [[ -f /var/www/.ssh/id_rsa ]]; then'; \
