@@ -1,4 +1,6 @@
-FROM webdevops/php:7.2
+FROM pagespeed/nginx-pagespeed as pagespeed
+
+FROM webdevops/php-nginx:7.2
 
 # Environment variables
 ENV APPLICATION_PATH=/var/www/html
@@ -31,6 +33,9 @@ RUN chmod a+rx /usr/local/bin/beanstalk_entrypoint
 # Encrypted Drupal Database Connections with Amazon RDS
 ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem  /etc/ssl/certs/rds-combined-ca-bundle.pem
 RUN chmod 755 /etc/ssl/certs/rds-combined-ca-bundle.pem
+
+COPY --from=pagespeed /usr/sbin/nginx /usr/sbin/nginx
+COPY --from=pagespeed /usr/lib/nginx/modules/ /usr/lib/nginx/modules/
 
 # Change user
 USER application
