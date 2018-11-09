@@ -1,5 +1,3 @@
-FROM pagespeed/nginx-pagespeed as pagespeed
-
 FROM webdevops/php-nginx:7.2
 
 # Environment variables
@@ -14,6 +12,9 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
       libjpeg62-turbo-dev \
       libfreetype6-dev \
       mysql-client \
+      build-essential \
+      libpcre3-dev \
+      uuid-dev \
       nano
 
 # Reconfigure GD
@@ -22,11 +23,6 @@ RUN docker-php-ext-configure gd \
       --with-freetype-dir=/usr/include/ \
       --with-png-dir=/usr/include/ \
       --with-jpeg-dir=/usr/include/
-
-# Let's keep the house clean
-RUN docker-image-cleanup \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 
 # The executable for post deploy operations
 COPY beanstalk_entrypoint.sh /usr/local/bin/beanstalk_entrypoint
@@ -37,11 +33,14 @@ ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem  /etc/ssl/
 RUN chmod 755 /etc/ssl/certs/rds-combined-ca-bundle.pem
 
 # Pagespeed
-COPY --from=pagespeed /usr/sbin/nginx /usr/sbin/nginx
-COPY --from=pagespeed /usr/lib/nginx/modules/ /usr/lib/nginx/modules/
-COPY --from=pagespeed /etc/nginx /etc/nginx
-COPY --from=pagespeed /usr/share/nginx/html/ /usr/share/nginx/html/
-COPY --from=pagespeed /var/cache/ngx_pagespeed /var/cache/ngx_pagespeed
+RUN apt-get purge nginx -y
+COPY install_pagespeed.sh /tmp/install_pagespeed.sh
+RUN chmod a+rx /tmp/install_pagespeed.sh && ./tmp/install_pagespeed.sh
+
+# Let's keep the house clean
+RUN docker-image-cleanup \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Change user
 USER application
