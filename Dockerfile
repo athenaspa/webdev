@@ -3,7 +3,9 @@ FROM pagespeed/nginx-pagespeed as pagespeed
 FROM webdevops/php-nginx:7.2
 
 # Environment variables
-ENV APPLICATION_PATH=/var/www/html
+ENV APPLICATION_PATH=/var/www/html \
+    WEB_DOCUMENT_ROOT=/var/www/html/web \
+    ROBO_DRUPAL8_ENV=stage
 
 # Commont tools
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
@@ -34,6 +36,7 @@ RUN chmod a+rx /usr/local/bin/beanstalk_entrypoint
 ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem  /etc/ssl/certs/rds-combined-ca-bundle.pem
 RUN chmod 755 /etc/ssl/certs/rds-combined-ca-bundle.pem
 
+# Pagespeed
 COPY --from=pagespeed /usr/sbin/nginx /usr/sbin/nginx
 COPY --from=pagespeed /usr/lib/nginx/modules/ /usr/lib/nginx/modules/
 
