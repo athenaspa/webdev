@@ -39,6 +39,7 @@ RUN chmod 755 /etc/ssl/certs/rds-combined-ca-bundle.pem
 # Pagespeed
 COPY --from=pagespeed /usr/sbin/nginx /usr/sbin/nginx
 COPY --from=pagespeed /usr/lib/nginx/modules/ /usr/lib/nginx/modules/
+COPY --from=pagespeed /var/cache/ngx_pagespeed /var/cache/ngx_pagespeed
 
 # Change user
 USER application

@@ -2,6 +2,6 @@
 
 https://hub.docker.com/r/athenagroup/webdev
 
-extension of webdevops/php:7.2 image
+extension of webdevops/php-nginx:7.2 image
 
-cfr: https://github.com/webdevops/Dockerfile/blob/master/docker/php-official/7.2/Dockerfile
+cfr: https://github.com/webdevops/Dockerfile/blob/master/docker/php-nginx/7.2/Dockerfile
