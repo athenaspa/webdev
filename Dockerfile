@@ -37,7 +37,6 @@ ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem  /etc/ssl/
 RUN chmod 755 /etc/ssl/certs/rds-combined-ca-bundle.pem
 
 # Pagespeed
-COPY --from=pagespeed /usr/bin/envsubst /usr/local/bin
 COPY --from=pagespeed /usr/sbin/nginx /usr/sbin/nginx
 COPY --from=pagespeed /usr/lib/nginx/modules/ /usr/lib/nginx/modules/
 COPY --from=pagespeed /etc/nginx /etc/nginx
