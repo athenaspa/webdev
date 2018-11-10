@@ -33,9 +33,10 @@ ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem  /etc/ssl/
 RUN chmod 755 /etc/ssl/certs/rds-combined-ca-bundle.pem
 
 # Pagespeed
-RUN apt-get purge nginx -y
+RUN apt-get purge nginx nginx-common -y
 COPY install_pagespeed.sh /tmp/install_pagespeed.sh
 RUN chmod a+rx /tmp/install_pagespeed.sh && ./tmp/install_pagespeed.sh
+COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 
 # Let's keep the house clean
 RUN docker-image-cleanup \
