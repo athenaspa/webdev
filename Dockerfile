@@ -37,6 +37,7 @@ RUN apt-get purge nginx nginx-common -y
 COPY install_pagespeed.sh /tmp/install_pagespeed.sh
 RUN chmod a+rx /tmp/install_pagespeed.sh && ./tmp/install_pagespeed.sh
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
+RUN sed -i "1iuser ${APPLICATION_USER};" /usr/local/nginx/conf/nginx.conf
 
 # Let's keep the house clean
 RUN docker-image-cleanup \

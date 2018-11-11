@@ -39,8 +39,8 @@ tar -xvzf nginx-${NGINX_VERSION}.tar.gz
 rm nginx-${NGINX_VERSION}.tar.gz
 cd nginx-${NGINX_VERSION}
 ./configure \
---user=application \
---group=application \
+--user=${APPLICATION_USER} \
+--group=${APPLICATION_GROUP} \
 --with-debug \
 --with-pcre-jit \
 --with-ipv6 \
