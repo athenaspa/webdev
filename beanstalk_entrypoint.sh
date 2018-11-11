@@ -2,6 +2,5 @@
 
 set -e
 
-# Change the files owner otherwise Drupal can not write
-chown -R application:application /var/www/html
-chmod -R 755 /var/www/html
+chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} ${APPLICATION_PATH}
+chmod -R 755 ${APPLICATION_PATH}

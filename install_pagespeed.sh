@@ -72,9 +72,9 @@ mkdir -p /var/cache/ngx_pagespeed
 mkdir -p /pagespeed_static
 mkdir -p /ngx_pagespeed_beacon
 
-chown -R application:application /var/cache/ngx_pagespeed
-chown -R application:application /pagespeed_static
-chown -R application:application /ngx_pagespeed_beacon
+chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /var/cache/ngx_pagespeed  && \
+chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /pagespeed_static && \
+chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /ngx_pagespeed_beacon && \
 
 chmod -R 755 /var/cache/ngx_pagespeed
 chmod -R 755 /pagespeed_static

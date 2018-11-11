@@ -32,7 +32,7 @@ RUN chmod a+rx /usr/local/bin/beanstalk_entrypoint
 ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem  /etc/ssl/certs/rds-combined-ca-bundle.pem
 RUN chmod 755 /etc/ssl/certs/rds-combined-ca-bundle.pem
 
-# Pagespeed
+# Pagespeed support
 RUN apt-get purge nginx nginx-common -y
 COPY install_pagespeed.sh /tmp/install_pagespeed.sh
 RUN chmod a+rx /tmp/install_pagespeed.sh && ./tmp/install_pagespeed.sh
@@ -44,7 +44,7 @@ RUN docker-image-cleanup \
     && rm -rf /var/lib/apt/lists/*
 
 # Change user
-USER application
+USER ${APPLICATION_USER}
 
 # Composer parallel install plugin
 RUN composer global require hirak/prestissimo
