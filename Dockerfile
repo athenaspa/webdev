@@ -63,4 +63,4 @@ RUN { \
     } >> ~/.bashrc
 
 # Default work dir
-WORKDIR "/var/www/html"
+WORKDIR ${APPLICATION_PATH}
