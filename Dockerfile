@@ -3,7 +3,9 @@ FROM webdevops/php-nginx:7.2
 # Environment variables
 ENV APPLICATION_PATH=/var/www/html \
     WEB_DOCUMENT_ROOT=/var/www/html/web \
-    ROBO_DRUPAL8_ENV=stage
+    ROBO_DRUPAL8_ENV=stage \
+    CONTAINER_UID=${APPLICATION_UID} 
+    # CONTAINER_UID is set to get rid of this issue https://github.com/webdevops/Dockerfile/issues/226#issuecomment-408679588
 
 # Commont tools
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
