@@ -7,6 +7,7 @@ ENV APPLICATION_PATH=/var/www/html \
 
 # Commont tools
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
+      sudo \
       gettext \
       libpng16-16 \
       libjpeg62-turbo-dev \
@@ -38,6 +39,10 @@ COPY install_pagespeed.sh /tmp/install_pagespeed.sh
 RUN chmod a+rx /tmp/install_pagespeed.sh && ./tmp/install_pagespeed.sh
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 RUN sed -i "1iuser ${APPLICATION_USER};" /usr/local/nginx/conf/nginx.conf
+
+# Add application user to sudoers
+RUN usermod -aG sudo ${APPLICATION_USER} \ 
+    && echo "${APPLICATION_USER} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${APPLICATION_USER}
 
 # Let's keep the house clean
 RUN docker-image-cleanup \
