@@ -25,11 +25,7 @@ RUN docker-php-ext-configure gd \
       --with-png-dir=/usr/include/ \
       --with-jpeg-dir=/usr/include/
 
-# The executable for post deploy operations
-COPY beanstalk_entrypoint.sh /usr/local/bin/beanstalk_entrypoint
-RUN chmod a+rx /usr/local/bin/beanstalk_entrypoint
-
-# Encrypted Drupal Database Connections with Amazon RDS
+# Encrypted Database Connections with Amazon RDS
 ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem  /etc/ssl/certs/rds-combined-ca-bundle.pem
 RUN chmod 755 /etc/ssl/certs/rds-combined-ca-bundle.pem
 
