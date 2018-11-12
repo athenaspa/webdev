@@ -3,8 +3,7 @@ FROM webdevops/php-nginx:7.2
 # Environment variables
 ENV APPLICATION_PATH=/var/www/html \
     WEB_DOCUMENT_ROOT=/var/www/html/web \
-    ROBO_DRUPAL8_ENV=stage \
-    CONTAINER_UID=${APPLICATION_UID}
+    ROBO_DRUPAL8_ENV=stage
 
 # Commont tools
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
