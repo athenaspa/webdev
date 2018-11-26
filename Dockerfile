@@ -9,14 +9,13 @@ ENV APPLICATION_PATH=/var/www/html \
 RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
       sudo \
       gettext \
-      libpng16-16 \
-      libjpeg62-turbo-dev \
       libfreetype6-dev \
       mysql-client \
       build-essential \
       libpcre3-dev \
       uuid-dev \
-      nano
+      nano \
+      docker-service enable postfix
 
 # Reconfigure GD
 RUN docker-php-ext-configure gd \
