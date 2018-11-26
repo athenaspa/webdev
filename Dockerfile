@@ -14,8 +14,7 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
       build-essential \
       libpcre3-dev \
       uuid-dev \
-      nano \
-      docker-service enable postfix
+      nano
 
 # Reconfigure GD
 RUN docker-php-ext-configure gd \
@@ -39,8 +38,10 @@ RUN sed -i "1iuser ${APPLICATION_USER};" /usr/local/nginx/conf/nginx.conf
 RUN usermod -aG sudo ${APPLICATION_USER} \ 
     && echo "${APPLICATION_USER} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${APPLICATION_USER}
 
-# Let's keep the house clean
-RUN docker-image-cleanup \
+# Finalize installation and clean up
+RUN docker-service enable postfix \
+    && docker-run-bootstrap \
+    && docker-image-cleanup \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
