@@ -32,7 +32,7 @@ psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_RELEASE_NUMBER}.tar.gz
 wget ${psol_url}
 tar -xzvf $(basename ${psol_url})
 
-NGINX_VERSION=1.15.6
+NGINX_VERSION=1.15.8
 cd /opt
 wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 tar -xvzf nginx-${NGINX_VERSION}.tar.gz
