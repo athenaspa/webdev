@@ -55,8 +55,8 @@ RUN composer global require hirak/prestissimo
 RUN { \
       echo ' '; \
       echo '# Add bash aliases.'; \
-      echo 'if [ -f /var/www/html/.aliases ]; then'; \
-      echo '    source /var/www/html/.aliases'; \
+      echo 'if [ -f $APPLICATION_PATH/.aliases ]; then'; \
+      echo '    source $APPLICATION_PATH/.aliases'; \
       echo 'fi'; \
       echo ' '; \
       echo '# Add terminal config.'; \
