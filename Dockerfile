@@ -1,4 +1,4 @@
-FROM webdevops/php-nginx:7.3
+FROM webdevops/php-nginx:7.2
 
 # Environment variables
 ENV APPLICATION_PATH=/var/www/html \
