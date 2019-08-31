@@ -1,4 +1,4 @@
-FROM webdevops/php-nginx:7.2
+FROM webdevops/php-nginx:7.3
 
 # Environment variables
 ENV APPLICATION_PATH=/var/www/html \
@@ -37,6 +37,9 @@ RUN sed -i "1iuser ${APPLICATION_USER};" /usr/local/nginx/conf/nginx.conf
 # Add application user to sudoers
 RUN usermod -aG sudo ${APPLICATION_USER} \ 
     && echo "${APPLICATION_USER} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${APPLICATION_USER}
+
+# WIP: bypass https://www.drupal.org/project/redis/issues/3068810 issue
+RUN pecl install -f redis-4.3.0
 
 # Finalize installation and clean up
 RUN docker-service enable postfix \
